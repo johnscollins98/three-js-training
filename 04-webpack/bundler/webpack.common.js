@@ -4,20 +4,16 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 
 module.exports = {
-    entry: path.resolve(__dirname, '../src/script.js'),
-    output:
-    {
+    entry: path.resolve(__dirname, '../src/script.ts'),
+    output: {
         hashFunction: 'xxhash64',
         filename: 'bundle.[contenthash].js',
         path: path.resolve(__dirname, '../dist')
     },
     devtool: 'source-map',
-    plugins:
-    [
+    plugins: [
         new CopyWebpackPlugin({
-            patterns: [
-                { from: path.resolve(__dirname, '../static') }
-            ]
+            patterns: [{ from: path.resolve(__dirname, '../static') }]
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../src/index.html'),
@@ -25,45 +21,32 @@ module.exports = {
         }),
         new MiniCSSExtractPlugin()
     ],
-    module:
-    {
-        rules:
-        [
+    module: {
+        rules: [
             // HTML
             {
                 test: /\.(html)$/,
-                use:
-                [
-                    'html-loader'
-                ]
+                use: ['html-loader']
             },
 
             // JS
             {
-                test: /\.js$/,
+                test: /\.ts$/,
                 exclude: /node_modules/,
-                use:
-                [
-                    'babel-loader'
-                ]
+                use: ['ts-loader']
             },
 
             // CSS
             {
                 test: /\.css$/,
-                use:
-                [
-                    MiniCSSExtractPlugin.loader,
-                    'css-loader'
-                ]
+                use: [MiniCSSExtractPlugin.loader, 'css-loader']
             },
 
             // Images
             {
                 test: /\.(jpg|png|gif|svg)$/,
                 type: 'asset/resource',
-                generator:
-                {
+                generator: {
                     filename: 'assets/images/[hash][ext]'
                 }
             },
@@ -72,8 +55,7 @@ module.exports = {
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
                 type: 'asset/resource',
-                generator:
-                {
+                generator: {
                     filename: 'assets/fonts/[hash][ext]'
                 }
             }
