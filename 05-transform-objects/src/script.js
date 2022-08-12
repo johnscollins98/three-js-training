@@ -10,36 +10,31 @@ const scene = new THREE.Scene()
 /**
  * Objects
  */
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
+const group = new THREE.Group()
+scene.add(group)
 
-// Adjustments can be done any time before `render`
-scene.add(mesh)
+const cube1 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+)
 
-// Position
-// mesh.position.x = 0.7
-// mesh.position.y = -0.6
-// mesh.position.z = 1
-mesh.position.set(0.7, -0.6, 1) // equivalent of above
-console.log(mesh.position.length()) // length of vector from center of the scene
-// mesh.position.normalize() // reduces vector length to 1
+const cube2 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+)
+cube2.position.x = -2
 
-// Scale
-// mesh.scale.x = 2
-// mesh.scale.y = 0.5
-// mesh.scale.z = 0.5
-mesh.scale.set(2, 0.5, 0.5)
-console.log(mesh.scale.length())
+const cube3 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x0000ff })
+)
+cube3.position.x = 2
 
-// Rotate (with rotation property)
+group.add(cube1, cube2, cube3)
 
-// change order rotations are applied to axis 
-// - make sure to do this before actually ordering
-mesh.rotation.reorder('YXZ') 
-mesh.rotation.y = Math.PI // half a rotation
-mesh.rotation.y = Math.PI / 2 // quarter rotation
-mesh.rotation.x = Math.PI / 4 // eight rotation ...
+group.position.y = 1
+group.scale.y = 2
+group.rotation.y = Math.PI / 4
 
 // axes helper
 scene.add(new THREE.AxesHelper(2))
@@ -58,10 +53,6 @@ const sizes = {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 camera.position.z = 3
 scene.add(camera)
-console.log(mesh.position.distanceTo(camera.position)) // length of vector from camera position
-
-// Make camera look at cube
-camera.lookAt(mesh.position)
 
 /**
  * Renderer
