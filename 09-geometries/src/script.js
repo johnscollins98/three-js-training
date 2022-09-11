@@ -13,12 +13,14 @@ const scene = new THREE.Scene()
 
 // Object
 const geometry = new THREE.BufferGeometry()
+const count = 100
 
-const positionsArray = new Float32Array([
-    0, 0, 0,
-    0, 1, 0,
-    1, 0, 0 
-])
+// 50 triangles with 3 vertices with 3 components (x,y,z)
+const positionsArray = new Float32Array(count * 3 * 3)
+
+for (let i = 0; i < count * 3 * 3; i++) {
+    positionsArray[i] = (Math.random() - 0.5) * 2
+}
 
 const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3)
 geometry.setAttribute('position', positionsAttribute)
